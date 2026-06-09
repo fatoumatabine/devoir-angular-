@@ -45,8 +45,8 @@ describe('App', () => {
 
     const compiled = fixture.nativeElement as HTMLElement;
     expect(compiled.querySelector('.metric-sport strong')?.textContent?.trim()).toBe('620');
-    expect(compiled.querySelector('.metric-water strong')?.textContent?.trim()).toBe('1600');
-    expect(compiled.querySelector('.metric-balance strong')?.textContent?.trim()).toBe('1380');
+    expect(compiled.querySelector('.metric-water strong')?.textContent?.trim()).toBe('1,600');
+    expect(compiled.querySelector('.metric-balance strong')?.textContent?.trim()).toBe('1,380');
     expect(compiled.querySelector('.health-message')?.textContent).toContain('Objectif Santé Atteint');
     expect(compiled.querySelectorAll('.activity-entry')).toHaveLength(2);
   });

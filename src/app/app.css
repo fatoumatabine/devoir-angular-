@@ -12,11 +12,11 @@
 
 .fit-shell {
   min-height: 100dvh;
-  padding: 24px;
+  padding: 28px;
 }
 
 .fit-dashboard {
-  max-width: 1100px;
+  max-width: 1160px;
   margin: 0 auto;
 }
 
@@ -24,7 +24,8 @@
   display: flex;
   justify-content: space-between;
   gap: 16px;
-  margin-bottom: 20px;
+  align-items: flex-end;
+  margin-bottom: 22px;
 }
 
 .brand,
@@ -48,7 +49,7 @@ p {
 
 h1 {
   margin-top: 6px;
-  font-size: 2.6rem;
+  font-size: 2.8rem;
   line-height: 1;
 }
 
@@ -58,7 +59,7 @@ h2 {
 
 .target {
   height: fit-content;
-  padding: 12px;
+  padding: 13px 16px;
   border: 1px solid #d4ddd5;
   border-radius: 8px;
   background: white;
@@ -67,8 +68,8 @@ h2 {
 .metrics {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 14px;
-  margin-bottom: 14px;
+  gap: 16px;
+  margin-bottom: 16px;
 }
 
 .metric,
@@ -81,9 +82,10 @@ h2 {
 }
 
 .metric {
-  min-height: 130px;
-  padding: 16px;
+  min-height: 140px;
+  padding: 18px;
   border-top: 6px solid #24895d;
+  box-shadow: 0 12px 28px rgba(31, 44, 35, 0.06);
 }
 
 .metric-sport {
@@ -97,11 +99,24 @@ h2 {
 .metric strong {
   display: block;
   margin: 12px 0 4px;
-  font-size: 2.4rem;
+  font-size: 2.35rem;
+  line-height: 1.05;
+  overflow-wrap: anywhere;
+  font-variant-numeric: tabular-nums;
+}
+
+.metric-danger {
+  border-color: #e2a1a1;
+  border-top-color: #b32626;
+  background: #fff7f7;
+}
+
+.metric-danger strong {
+  color: #9f2020;
 }
 
 .health-message {
-  margin-bottom: 14px;
+  margin-bottom: 16px;
   padding: 14px 16px;
 }
 
@@ -132,13 +147,14 @@ h2 {
 .workspace {
   display: grid;
   grid-template-columns: 360px 1fr;
-  gap: 14px;
+  gap: 16px;
   align-items: start;
 }
 
 .form-panel,
 .log-panel {
   padding: 18px;
+  box-shadow: 0 12px 28px rgba(31, 44, 35, 0.06);
 }
 
 .section-heading {
@@ -184,6 +200,10 @@ button {
   font-weight: bold;
 }
 
+button:hover {
+  background: #25352b;
+}
+
 .form-error {
   padding: 10px;
   border-radius: 8px;
@@ -213,7 +233,7 @@ button {
 
 .activity-entry {
   display: grid;
-  grid-template-columns: 70px 1fr 90px;
+  grid-template-columns: 64px minmax(0, 1fr) 110px 92px;
   align-items: center;
   gap: 12px;
   padding: 12px;
@@ -235,10 +255,43 @@ button {
 .activity-entry time,
 .activity-entry p {
   font-weight: bold;
+  font-variant-numeric: tabular-nums;
 }
 
 .activity-entry p {
   text-align: right;
+}
+
+.entry-main {
+  min-width: 0;
+  display: grid;
+  gap: 5px;
+}
+
+.entry-main strong {
+  overflow-wrap: anywhere;
+}
+
+.activity-badge {
+  width: fit-content;
+  padding: 3px 8px;
+  border-radius: 999px;
+  background: rgba(23, 32, 27, 0.08);
+  font-size: 0.72rem;
+}
+
+.delete-button {
+  min-height: 34px;
+  margin: 0;
+  padding: 0 10px;
+  border: 1px solid #d5b6b6;
+  background: white;
+  color: #9f2020;
+  font-size: 0.82rem;
+}
+
+.delete-button:hover {
+  background: #fff1f1;
 }
 
 @media (max-width: 800px) {
@@ -251,6 +304,14 @@ button {
 
   h1 {
     font-size: 2.2rem;
+  }
+
+  .activity-entry {
+    grid-template-columns: 64px 1fr 100px;
+  }
+
+  .delete-button {
+    grid-column: 2 / 4;
   }
 }
 
@@ -265,5 +326,9 @@ button {
 
   .activity-entry p {
     text-align: left;
+  }
+
+  .delete-button {
+    grid-column: auto;
   }
 }

@@ -11,19 +11,19 @@
     <section class="metrics" aria-label="Indicateurs physiques">
       <article class="metric metric-sport">
         <span class="metric-label">Calories brulees</span>
-        <strong>{{ totalCalories() }}</strong>
+        <strong>{{ totalCalories() | number: '1.0-0' }}</strong>
         <span class="metric-unit">kcal</span>
       </article>
 
       <article class="metric metric-water">
         <span class="metric-label">Eau consommee</span>
-        <strong>{{ totalWater() }}</strong>
+        <strong>{{ totalWater() | number: '1.0-0' }}</strong>
         <span class="metric-unit">ml</span>
       </article>
 
-      <article class="metric metric-balance">
+      <article class="metric metric-balance" [class.metric-danger]="remainingCalories() < 0">
         <span class="metric-label">Bilan restant</span>
-        <strong>{{ remainingCalories() }}</strong>
+        <strong>{{ remainingCalories() | number: '1.0-0' }}</strong>
         <span class="metric-unit">kcal</span>
       </article>
     </section>
@@ -81,9 +81,10 @@
             name="activity-value"
             type="number"
             min="1"
+            [max]="maxActivityValue"
             step="1"
             inputmode="numeric"
-            placeholder="Calories ou ml"
+            placeholder="1 a 5000"
             #activityValue
             required
           />
@@ -120,9 +121,17 @@
                 </time>
                 <div class="entry-main">
                   <strong>{{ activity.name }}</strong>
-                  <span>{{ activity.type === 'SPORT' ? 'Sport' : 'Hydratation' }}</span>
+                  <span class="activity-badge">{{ activity.type === 'SPORT' ? 'Sport' : 'Hydratation' }}</span>
                 </div>
-                <p>{{ activity.value }} {{ activity.type === 'SPORT' ? 'kcal' : 'ml' }}</p>
+                <p>{{ activity.value | number: '1.0-0' }} {{ activity.type === 'SPORT' ? 'kcal' : 'ml' }}</p>
+                <button
+                  class="delete-button"
+                  type="button"
+                  aria-label="Supprimer cette activite"
+                  (click)="deleteActivity(activity.id)"
+                >
+                  Supprimer
+                </button>
               </li>
             }
           </ol>

@@ -1,4 +1,4 @@
-import { DatePipe, isPlatformBrowser } from '@angular/common';
+import { DatePipe, DecimalPipe, isPlatformBrowser } from '@angular/common';
 import { Component, PLATFORM_ID, computed, effect, inject, signal } from '@angular/core';
 
 type ActivityType = 'SPORT' | 'HYDRATATION';
@@ -14,11 +14,12 @@ interface Activity {
 const STORAGE_KEY = 'fit-track-pro.activities';
 const CALORIE_GOAL = 2000;
 const WATER_GOAL = 1500;
+const MAX_ACTIVITY_VALUE = 5000;
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [DatePipe],
+  imports: [DatePipe, DecimalPipe],
   templateUrl: './app.html',
   styleUrl: './app.css',
 })
@@ -27,6 +28,7 @@ export class App {
 
   protected readonly calorieGoal = CALORIE_GOAL;
   protected readonly waterGoal = WATER_GOAL;
+  protected readonly maxActivityValue = MAX_ACTIVITY_VALUE;
   protected readonly activities = signal<Activity[]>([]);
   protected readonly errorMessage = signal('');
 
@@ -90,13 +92,18 @@ export class App {
       return;
     }
 
-    if (Number.isNaN(activityValue) || activityValue <= 0) {
+    if (!Number.isFinite(activityValue) || activityValue <= 0) {
       this.errorMessage.set('La valeur doit etre superieure a 0.');
       return;
     }
 
+    if (activityValue > this.maxActivityValue) {
+      this.errorMessage.set(`La valeur maximale acceptee est ${this.maxActivityValue}.`);
+      return;
+    }
+
     const newActivity: Activity = {
-      id: Date.now().toString(),
+      id: `${Date.now()}-${this.activities().length + 1}`,
       name: activityName,
       type,
       value: Math.round(activityValue),
@@ -106,6 +113,10 @@ export class App {
     this.activities.update((activities) => [...activities, newActivity]);
     this.errorMessage.set('');
     form.reset();
+  }
+
+  protected deleteActivity(id: string): void {
+    this.activities.update((activities) => activities.filter((activity) => activity.id !== id));
   }
 
   private loadActivities(): Activity[] {
